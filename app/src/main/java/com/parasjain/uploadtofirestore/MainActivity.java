@@ -32,6 +32,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     EditText text;
+    String url="";
     FirebaseFirestore db = FirebaseFirestore.getInstance ();
 
     @Override
@@ -47,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
         buttonParse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                url = text.getText().toString();
                 jsonParse();
             }
         });
     }
 
     private void jsonParse() {
-
-        String url = "https://api.myjson.com/bins/c3zta";
 
         if (url.isEmpty ()) {
             Toast.makeText (this, "Enter File url first", Toast.LENGTH_SHORT).show ();
@@ -64,20 +65,24 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                JSONArray jsonArray = response.getJSONArray ("Vegetables");
+                                JSONArray jsonArray = response.getJSONArray (/*Enter Heading type String to get JSON file*/);
 
                                 for (int i = 0; i < jsonArray.length (); i++) {
                                     JSONObject employee = jsonArray.getJSONObject (i);
 
+                                    //Change these variables to Get Data
                                     String name = employee.getString ("Name");
                                     int price = Integer.parseInt(employee.getString ("Price"));
                                     String image = employee.getString("Image");
+
+                                    //Change this Map to Enter Data according to Variables
+
                                     Map<String, Object> user = new HashMap<> ();
                                     user.put ("Name", name);
                                     user.put ("Price", price);
                                     user.put("Image",image);
 // Add a new document with a generated ID
-                                    db.collection ("B2C").document("Products").collection("Vegetables").document(name)
+                                    db.collection (//Add Document Path)
                                             .set (user)
                                             .addOnSuccessListener (new OnSuccessListener<Void> () {
                                                 @Override

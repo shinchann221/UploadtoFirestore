@@ -10,7 +10,8 @@
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ENTER URL OF JSON FILE"/>
+        android:hint="ENTER URL OF JSON FILE"/> //Enter the URL of JSON File Hosted Online
+
     <Button
         android:layout_centerInParent="true"
         android:id="@+id/uploadbtn"
